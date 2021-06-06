@@ -1,1 +1,1 @@
-CelesteBot is an AI based on reinforcement learning that plays ("Celeste")[https://store.steampowered.com/app/504230/Celeste/].
+CelesteBot is an AI based on reinforcement learning that plays ["Celeste"](https://store.steampowered.com/app/504230/Celeste/).
