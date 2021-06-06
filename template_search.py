@@ -5,7 +5,7 @@ import time
 import cv2
 
 def main():
-    template = cv2.imread('Girl.png', 0)
+    template = cv2.imread('resources/Girl.png', 0)
     w, h = template.shape[::-1]
     
     for i in list(range(4))[::-1]:
