@@ -1,25 +1,38 @@
-import cv2
+#If able to get multiple pics of girl:D can probably more precisely capture her.
 import numpy as np
+from PIL import ImageGrab
+import time
+import cv2
 
-cap = cv2.VideoCapture(0)
-
-while(1):
-    _, frame = cap.read()
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+def main():
+    template = cv2.imread('Girl.png', 0)
+    w, h = template.shape[::-1]
     
-    lower_red = np.array([30,150,50])
-    upper_red = np.array([255,255,180])
-    
-    mask = cv2.inRange(hsv, lower_red, upper_red)
-    res = cv2.bitwise_and(frame, frame, mask= mask)
+    for i in list(range(4))[::-1]:
+        print(i + 1)
+        time.sleep(1)
+        
+    last_time = time.time()
+    while True:
+        screen =  np.array(ImageGrab.grab(bbox=(0,35,964,572)))
+        screen_rgb = cv2.cvtColor(screen, cv2.COLOR_BGR2RGB)
+        screen_gray = cv2.cvtColor(screen, cv2.COLOR_BGR2GRAY)
+        res = cv2.matchTemplate(screen_gray, template, cv2.TM_CCOEFF_NORMED)
+        threshold = 0.8
+        loc = np.where( res >= threshold)
+        for pt in zip(*loc[::-1]):
+            cv2.rectangle(screen_rgb, pt, (pt[0] + w, pt[1] + h), (0,255,255), 2)
+        
+        #print('Frame took {} seconds'.format(time.time()-last_time))
+        last_time = time.time()
+        #new_screen = process_img(screen)
+        
+        cv2.imshow('screen', screen_rgb)
+        #cv2.imshow('window',cv2.cvtColor(screen, cv2.COLOR_BGR2RGB))
+        if cv2.waitKey(25) & 0xFF == ord('q'):
+            cv2.destroyAllWindows()
+            break
 
-    cv2.imshow('frame',frame)
-    cv2.imshow('mask',mask)
-    cv2.imshow('res',res)
-    
-    k = cv2.waitKey(5) & 0xFF
-    if k == 27:
-        break
 
-cv2.destroyAllWindows()
-cap.release()
+if __name__ == "__main__":
+    main()
