@@ -2,9 +2,11 @@ from direct_keys import PressKey, ReleaseKey, W, A, S, D, ND1, ND2, ND3, Esc, En
 import time
 from actions import UP, LEFT, RIGHT, JUMP, DASH, action2key
 
+
 SHORT = 0.1
 MEDIUM = 0.3
 LONG = 0.5
+
 
 class CelesteEnvironment:
     """
@@ -13,7 +15,7 @@ class CelesteEnvironment:
 
     def reset(self):
         """
-        should restart current level in any case.
+        Should restart current level in any case.
         """
         PressKey(Esc)
         time.sleep(SHORT)
@@ -32,12 +34,15 @@ class CelesteEnvironment:
         time.sleep(sleep_time)
         for action in actions:
             ReleaseKey(action2key[action])
+
     def hold(self, actions):
         for action in actions:
             PressKey(action2key[action])
+
     def release(self, actions):
         for action in actions:
             ReleaseKey(action2key[action])
+
 
 if __name__ == "__main__":
     environment = CelesteEnvironment()
@@ -48,11 +53,11 @@ if __name__ == "__main__":
     environment.do_actions([JUMP], MEDIUM)
     environment.hold([UP, RIGHT])
     environment.do_actions([DASH], SHORT)
-    #долёт после dash
+    #time necessary after dash
     time.sleep(LONG)
-    #бегу по платформе
+    #running on the third platform
     time.sleep(MEDIUM)
-    #прыжок с платформе
+    #jump from the third to the forth platforms
     environment.do_actions([JUMP], MEDIUM)
     environment.do_actions([DASH], MEDIUM)
     time.sleep(SHORT)
