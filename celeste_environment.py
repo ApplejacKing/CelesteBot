@@ -26,33 +26,10 @@ class CelesteEnvironment:
         ReleaseKey(Enter)
         time.sleep(4)
 
-    def short_action(self, action):
-        """
-        should process AI actions into the game
-        """
-        PressKey(action2key[action])
-        time.sleep(SHORT)
-        ReleaseKey(action2key[action])
-
-    def short_actions(self, actions):
+    def do_actions(self, actions, sleep_time):
         for action in actions:
             PressKey(action2key[action])
-        time.sleep(SHORT)
-        for action in actions:
-            ReleaseKey(action2key[action])
-
-    def medium_action(self, action):
-        """
-        should process AI actions into the game
-        """
-        PressKey(action2key[action])
-        time.sleep(MEDIUM)
-        ReleaseKey(action2key[action])
-
-    def medium_actions(self, actions):
-        for action in actions:
-            PressKey(action2key[action])
-        time.sleep(MEDIUM)
+        time.sleep(sleep_time)
         for action in actions:
             ReleaseKey(action2key[action])
 
@@ -60,10 +37,10 @@ if __name__ == "__main__":
     environment = CelesteEnvironment()
     time.sleep(3)
     environment.reset()
-    environment.short_action(JUMP)
+    environment.do_actions([JUMP], SHORT)
     time.sleep(LONG)
-    environment.short_actions([RIGHT, UP, DASH])
-    environment.medium_action(JUMP)
-    time.sleep(LONG)
-    environment.medium_actions([RIGHT, UP, DASH])
+    environment.do_actions([RIGHT, UP, DASH], SHORT)
+    time.sleep(4)
+    environment.do_actions([JUMP], MEDIUM)
+    environment.do_actions([RIGHT, UP, DASH], MEDIUM)
     environment.reset()
