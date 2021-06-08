@@ -32,15 +32,29 @@ class CelesteEnvironment:
         time.sleep(sleep_time)
         for action in actions:
             ReleaseKey(action2key[action])
+    def hold(self, actions):
+        for action in actions:
+            PressKey(action2key[action])
+    def release(self, actions):
+        for action in actions:
+            ReleaseKey(action2key[action])
 
 if __name__ == "__main__":
     environment = CelesteEnvironment()
     time.sleep(3)
     environment.reset()
-    environment.do_actions([JUMP], SHORT)
-    time.sleep(LONG)
-    environment.do_actions([RIGHT, UP, DASH], SHORT)
-    time.sleep(4)
     environment.do_actions([JUMP], MEDIUM)
-    environment.do_actions([RIGHT, UP, DASH], MEDIUM)
-    environment.reset()
+    environment.do_actions([DASH], LONG)
+    environment.do_actions([JUMP], MEDIUM)
+    environment.hold([UP, RIGHT])
+    environment.do_actions([DASH], SHORT)
+    #долёт после dash
+    time.sleep(LONG)
+    #бегу по платформе
+    time.sleep(MEDIUM)
+    #прыжок с платформе
+    environment.do_actions([JUMP], MEDIUM)
+    environment.do_actions([DASH], MEDIUM)
+    time.sleep(SHORT)
+    environment.release([UP, RIGHT])
+
