@@ -5,4 +5,4 @@ LEFT = 1
 RIGHT = 2
 JUMP = 3
 DASH = 4
-action2key = {UP: W, LEFT: A, RIGHT: D, JUMP: ND1, DASH: ND3}
+move2key = {UP: W, LEFT: A, RIGHT: D, JUMP: ND1, DASH: ND3}
